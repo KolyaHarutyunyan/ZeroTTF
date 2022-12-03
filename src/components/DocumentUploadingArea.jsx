@@ -1,6 +1,6 @@
 const DocumentUploadingArea = () => {
     return (
-        <div>DocumentUploadingArea</div>
+        <div className="document-container">Document uploading area</div>
     );
 };
 
