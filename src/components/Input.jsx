@@ -1,12 +1,13 @@
+import { forwardRef } from "react";
 import clsx from "clsx";
 
-const Input = ({ className, label, ...props }) => {
+const Input = forwardRef(({ className, label, ...props }, ref) => {
     return (
         <label className={clsx(className, "label")}>
             {label}
-            <input {...props} />
+            <input ref={ref} {...props} />
         </label>
     );
-};
+});
 
 export default Input;
