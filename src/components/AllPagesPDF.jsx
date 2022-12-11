@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { setupPdfJs } from "../utils";
 
-const AllPagesPDF = ({ pdf }) => {
-  setupPdfJs(pdfjs);
+setupPdfJs(pdfjs);
 
+const AllPagesPDF = ({ pdf }) => {
   const [numPages, setNumPages] = useState(null);
 
   return (

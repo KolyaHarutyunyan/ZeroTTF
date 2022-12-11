@@ -1,36 +1,38 @@
+import { useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import { useFileUpload } from "../hooks";
 import AllPagesPDFViewer from "./AllPagesPDF";
+import acceptedFiles from "../acceptedFiles.json";
 
-const DocumentUploadingArea = () => {
-  const { file, handleFileChange } = useFileUpload();
+const DocumentUploadingArea = ({ document, handleChange }) => {
+  const { file, errorMsg, handleFileChange } = useFileUpload(document);
 
-  const onDrop = (acceptedFiles) => {
-    handleFileChange(acceptedFiles);
-  };
+  useEffect(() => {
+    if (!handleChange) return;
+    handleChange(file);
+  }, [file]);
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: {
-      "application/pdf": [".pdf"],
-      "image/jpeg": [".jpeg"],
-    },
-    onDrop,
+    accept: acceptedFiles,
+    onDrop: (files) => handleFileChange(files),
   });
 
   return (
     <div className="document-container" {...getRootProps()}>
       <input {...getInputProps()} />
-    {file ? (
-      <div className="document-container__file-box">
-        {file.type === "application/pdf" ? (
-          <AllPagesPDFViewer pdf={file.url} />
-        ) : (
-          <img src={file.url} alt="..." />
-        )}
-      </div>
-    ) : (
-      <p>Document uploading area</p>
-    )}
+      {file ? (
+        <div className="document-container__file-box">
+          {file.type === "application/pdf" ? (
+            <AllPagesPDFViewer pdf={file.url} />
+          ) : (
+            <img src={file.url} alt="..." />
+          )}
+        </div>
+      ) : errorMsg ? (
+        <p style={{ color: "tomato" }}>{errorMsg}</p>
+      ) : (
+        <p>Document uploading area</p>
+      )}
     </div>
   );
 };
