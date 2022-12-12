@@ -30,11 +30,11 @@ const VerificationForm = () => {
         }}
       >
         <DocumentUploadingArea
-          document={verificationForm.document}
+          document={document}
           handleChange={setDocument}
         />
         <FieldsArea
-          fields={verificationForm.fields}
+          fields={fields}
           handleChange={(field) => {
             setFields(
               fields.map((item) => {
